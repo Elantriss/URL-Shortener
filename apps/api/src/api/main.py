@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, HttpUrl
 from core import encode_base62
 
@@ -28,6 +29,13 @@ def shorten_url(request: ShortenRequest):
             'target_url': str(request.target_url)
         }
 
+@app.get('/{short_code}')
+def redirect_to_target(short_code: str):
+    if short_code not in _in_memory_store:
+        raise HTTPException(status_code=404, detail='Short code not found')
+    
+    target_url = _in_memory_store[short_code]
+    return RedirectResponse(ulr=target_url, status_code=302)
 
 def run() -> None:
     """Start the dev server. Entry point for the `uv run api` script."""
