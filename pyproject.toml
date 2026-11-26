@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 authors = [
-    { name = "Elantriss", email = "ellantriss_arch@proton.me" }
+    { name = "Elantriss", email = "" }
 ]
 requires-python = ">=3.14"
 dependencies = []
@@ -20,4 +20,9 @@ build-backend = "uv_build"
 members = [
     "apps/api",
     "libs/core",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
 ]
